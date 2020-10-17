@@ -19,7 +19,7 @@ class orders(models.Model):
     user = models.ForeignKey(User, related_name="order_foods", related_query_name="order_foods", null=True, blank=True,
                              on_delete=models.CASCADE)
     quantity=models.IntegerField(default=0)
-    pickup_address = models.TextField(max_length=20)
+    pickup_address = models.TextField(max_length=200)
     s = models.IntegerField(default=1)
 
 

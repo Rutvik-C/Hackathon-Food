@@ -48,7 +48,7 @@ class foodAvbl(models.Model):
     Other_Specifics=models.TextField(max_length=100,default="Punjabi,Chinese,Mexican")
     images=models.ImageField(upload_to='NGO/images', null=True, blank=True)
     city = models.CharField(max_length=100, default="enter")
-    pickup_address = models.TextField(max_length=20)
+    pickup_address = models.TextField(max_length=200)
     created_on=models.DateTimeField(auto_now_add=False , editable=True,null=True)
     edible = models.IntegerField(default=0)
 
@@ -63,7 +63,7 @@ class History(models.Model):
     Other_Specifics=models.TextField(max_length=100,default="Punjabi,Chinese,Mexican")
     images=models.ImageField(upload_to='NGO/images', null=True, blank=True)
     city = models.CharField(max_length=100, default="enter")
-    pickup_address = models.TextField(max_length=20)
+    pickup_address = models.TextField(max_length=200)
     created_on=models.DateTimeField(auto_now_add=False , editable=True,null=True)
     edible = models.IntegerField(default=0)
 
