@@ -6,10 +6,9 @@ from bootstrap_datepicker_plus import DateTimePickerInput
 from .forms import Registerdetail, Food
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth import authenticate, login, logout
-from .models import Belongs, foodAvbl, otherDetails,TypeOf,Cities,Measurement
+from .models import Belongs, foodAvbl, otherDetails,TypeOf,Cities,Measurement,History
 from django.core.mail import send_mail
 from django.utils import timezone
-
 
 def index(request):
     return render(request, 'NGO/index.html')
@@ -22,7 +21,6 @@ def Email(username,email):
         recipient_list = [email],
         fail_silently = False,
     )
-
 
 def signup(request):
     if request.method == "POST":
@@ -57,16 +55,13 @@ def signup(request):
         form = Registerdetail()
         return render(request, 'NGO/signup.html', {"form": form})
 
-
 def login_u(request):
     return render(request, 'NGO/login.html')
-
 
 def logout_u(request):
     logout(request)
     messages.success(request, 'Successfully logged out')
-    return redirect("/NGO")
-
+    return redirect("/NGO/login")
 
 def loginpage(request):
     if request.method == "POST":
@@ -94,10 +89,8 @@ def loginpage(request):
         return render(request, 'NGO/login.html')
         
 
-
 def check_user(user):
     return Belongs.objects.get(user=user).is_ngo
-
 
 @login_required
 def availability(request):
@@ -122,3 +115,13 @@ def availability(request):
             return redirect("/NGO/loginpage")
     else:
         return redirect("/NGO/loginpage")
+
+def alerts(request):
+    m=History.objects.filter(user=request.user)
+    if(len(m)!=0):
+        j = History.objects.filter(user=request.user)
+        parameter={'j':j}
+        return render(request, 'NGO/alert.html',parameter)
+    else:
+        return render(request, "NGO/alert1.html")
+

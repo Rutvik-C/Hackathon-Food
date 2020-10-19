@@ -37,15 +37,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto mr-auto">
                     <li class="nav-item dropdown static">
-                        <a class="nav-link dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Home </a>
-                        
-                    </li>
-                    
-                    <li class="nav-item dropdown static">
-                        <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Status </a>
-                        
-                    </li>
-                    <li class="nav-item dropdown position-relative">
+                        <a class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false"> Home </a>
                         
                     </li>
                     <li class="nav-item">
@@ -139,10 +131,10 @@
 </section>
 <h1>My Orders</h1>
 {% for i in h %}
-<ul>
+<ul class="p-5">
   <li>USERNAME : {{i.user}}</li>
   <li>ID : {{i.O_ID}}</li>
-  <li>Amount of food: {{i.quantity}}</li>
+  <li>Quantity of food: {{i.quantity}}</li>
   <li>Pick Up Address: {{i.pickup_address}}</li>
   {% if i.s == 1 %}
   <button><a href="{% url 'status1' i.O_ID %}">View Status</a></button>  

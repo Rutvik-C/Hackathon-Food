@@ -1,16 +1,16 @@
+
 from django.shortcuts import render,redirect
 from django .http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
-from NGO.models import Belongs,foodAvbl,otherDetails,Cities
+from NGO.models import Belongs,foodAvbl,otherDetails,Cities,History
 from NGO.forms import Registerdetail,otherDetails,foodAvbl
 from .forms import FoodRequest,Rate
 from .models import FoodReq,rate, orders
 from datetime import timedelta
 from django.core.mail import send_mail
 from django.utils import timezone
-
 
 
 def Email(username,email):
@@ -81,8 +81,7 @@ def login_u(request):
 def logout_u(request):
     logout(request)
     messages.success(request,'Successfully logged out')
-    return redirect("/Donate")
-
+    return redirect("/Donate/login")
 
 
 def loginpage(request):
@@ -104,6 +103,8 @@ def loginpage(request):
                         i.created_on += timedelta(hours=i.edible)
                         print(i.created_on)
                         if now>i.created_on:
+                            history = History(user=i.user,otherDetails=i.otherDetails,measurement=i.measurement,typee=i.typee,quantity=i.quantity,Other_Specifics=i.Other_Specifics,images=i.images,city=i.city,pickup_address=i.pickup_address,created_on=i.created_on,edible=i.edible)
+                            history.save()
                             i.delete()
                 h=orders.objects.all()
                 print(h)
@@ -126,10 +127,12 @@ def loginpage(request):
         print(h)
         now = timezone.now()
         for i in j:
-                    if i.created_on != None:
-                        i.created_on += timedelta(hours=i.edible)
-                        if now>i.created_on:
-                            i.delete()
+            if i.created_on != None:
+                i.created_on += timedelta(hours=i.edible)
+                if now>i.created_on:
+                    history = History(user=i.user,otherDetails=i.otherDetails,measurement=i.measurement,typee=i.typee,quantity=i.quantity,Other_Specifics=i.Other_Specifics,images=i.images,city=i.city,pickup_address=i.pickup_address,created_on=i.created_on,edible=i.edible)
+                    history.save()
+                    i.delete()
         parameter={'j':j,'h':h}
         messages.success(request,"Successfully Logged in")
         return render(request,'Donate/loginpage.html',parameter)
